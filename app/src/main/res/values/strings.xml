@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CalculatorPro</string>
+    <string name="bottom_sheet_test">Bottom Sheet Test</string>
+    <string-array name="단위">
+
+    <item>제곱미터</item>
+    <item>평</item>
+
+    </string-array>
+</resources>
