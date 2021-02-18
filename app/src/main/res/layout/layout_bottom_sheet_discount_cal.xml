@@ -14,93 +14,84 @@
         android:background="@drawable/bottom_sheet_discount_cal_background"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+
+        <LinearLayout
+            android:id="@+id/uplayout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            app:cardCornerRadius="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            >
+            android:orientation="horizontal"
+            android:background="@drawable/focus">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="60dp"
-                   android:gravity="center_vertical"
-                   android:layout_marginLeft="10dp"
-                   android:text="원래 가격"
-                   android:textSize="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="원래 가격"
+                android:textSize="15dp"/>
 
 
-                <TextView
-                    android:id="@+id/textview1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="4dp"
-                    android:gravity="right"
-                    android:textSize="25dp" />
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginRight="4dp"
+                android:gravity="right"
+                android:textSize="25dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="원"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="원"
+                android:layout_marginRight="8dp"
+                android:gravity="center_horizontal"
+                android:textSize="15dp" />
 
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:cardCornerRadius="20dp"
+        <LinearLayout
+            android:id="@+id/downlayout"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/notfocus"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="할인 퍼센트"
+                android:textSize="15dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:text="할인 퍼센트"
-                    android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_marginRight="4dp"
+                android:textSize="25dp" />
 
-                <TextView
-                    android:id="@+id/textview2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:layout_marginRight="4dp"
-                    android:textSize="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="%"
+                android:layout_marginRight="8dp"
+                android:gravity="center_horizontal"
+                android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="%"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="15dp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textView1;
         TextView textView2;
+        TextView textView3;
         Button btn1;
         Button btn2;
         Button btn3;
@@ -899,22 +901,31 @@ public class MainActivity extends AppCompatActivity {
                 minus = v.findViewById(R.id.minus);
                 plus = v.findViewById(R.id.plus);
 
+                LinearLayout uplayout = v.findViewById(R.id.uplayout);
+                LinearLayout downlayout = v.findViewById(R.id.downlayout);
 
-                minus.setOnClickListener(new View.OnClickListener() {
+                minus.setOnClickListener(new View.OnClickListener() {   // up
                     @Override
                     public void onClick(View v) {
                         status = 0;
                         dis_text[0].setText("");
                         number = 0;
+
+                        uplayout.setBackgroundResource(R.drawable.focus);
+                        downlayout.setBackgroundResource(R.drawable.notfocus);
+
                     }
                 });
 
-                plus.setOnClickListener(new View.OnClickListener() {
+                plus.setOnClickListener(new View.OnClickListener() {    // down
                     @Override
                     public void onClick(View v) {
                         status = 1;
                         dis_text[1].setText("");
                         number = 0;
+
+                        uplayout.setBackgroundResource(R.drawable.notfocus);
+                        downlayout.setBackgroundResource(R.drawable.focus);
                     }
                 });
 
