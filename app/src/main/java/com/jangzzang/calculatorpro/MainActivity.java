@@ -604,6 +604,9 @@ public class MainActivity extends AppCompatActivity {
                 v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_gold_cal,
                         (LinearLayout)findViewById(R.id.bottomSheetContainer_gold_cal));
 
+
+
+
                 Spinner spinner = v.findViewById(R.id.gold_spinner);
 
                 textView1 = v.findViewById(R.id.textview1);

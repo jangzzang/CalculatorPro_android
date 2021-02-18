@@ -36,6 +36,8 @@
                    android:layout_weight="1"
                    android:layout_marginLeft="8dp"
                    android:entries="@array/금단위"
+                   android:overlapAnchor="false"
+
                    />
 
 
@@ -322,7 +324,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             />
 
     </LinearLayout>
