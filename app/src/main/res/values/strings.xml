@@ -3,15 +3,62 @@
     <string name="bottom_sheet_test">Bottom Sheet Test</string>
     <string-array name="단위">
 
-    <item>제곱미터</item>
-    <item>평</item>
+        <item>밀리미터(mm)</item>
+        <item>센티미터(cm)</item>
+        <item>미터(m)</item>
+        <item>킬로미터(km)</item>
+        <item>인치(in)</item>
+        <item>피트(ft)</item>
+
+        <item>밀리그램(mg)</item>
+        <item>그램(g)</item>
+        <item>킬로그램(kg)</item>
+        <item>톤(t)</item>
+        <item>온즈(oz)</item>
+        <item>파운드(lb)</item>
+
+        <item>섭씨(C)</item>
+        <item>화씨(F)</item>
+        <item>절대온도(K)</item>
 
     </string-array>
+
+    <string-array name="len">
+        <item>밀리미터(mm)</item>
+        <item>센티미터(cm)</item>
+        <item>미터(m)</item>
+        <item>킬로미터(km)</item>
+        <item>인치(in)</item>
+        <item>피트(ft)</item>
+    </string-array>
+    <string-array name="wei">
+        <item>밀리그램(mg)</item>
+        <item>그램(g)</item>
+        <item>킬로그램(kg)</item>
+        <item>톤(t)</item>
+        <item>온즈(oz)</item>
+        <item>파운드(lb)</item>
+    </string-array>
+    <string-array name="tem">
+        <item>섭씨(C)</item>
+        <item>화씨(F)</item>
+        <item>절대온도(K)</item>
+    </string-array>
+
 
     <string-array name="금단위">
 
         <item>돈</item>
         <item>그램</item>
+
+    </string-array>
+
+    <string-array name="환율">
+        <item>한국</item>
+        <item>미국</item>
+        <item>유럽</item>
+        <item>일본</item>
+        <item>중국</item>
 
     </string-array>
 

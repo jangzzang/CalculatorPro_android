@@ -8,17 +8,17 @@
     >
 
     <LinearLayout
-        android:id="@+id/bottomSheetContainer_unit_cal"
+        android:id="@+id/bottomSheetContainer_money_cal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bottom_sheet_unit_cal_background"
+        android:background="@drawable/bottom_sheet_money_cal_background"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             >
@@ -30,10 +30,12 @@
                 >
 
                <Spinner
+                   android:id="@+id/money_sp1"
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
                    android:layout_weight="1"
-                   android:entries="@array/단위"
+                   android:entries="@array/환율"
+                   android:overlapAnchor="false"
                    />
 
 
@@ -42,8 +44,8 @@
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:textSize="35dp" />
+                    android:gravity="center"
+                    android:textSize="25dp" />
 
 
             </LinearLayout>
@@ -68,12 +70,32 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             >
-            <TextView
-                android:id="@+id/textview2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:gravity="bottom|right"
-                android:textSize="25dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <Spinner
+                    android:id="@+id/money_sp2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:entries="@array/환율"
+                    android:overlapAnchor="false"
+                    />
+
+
+                <TextView
+                    android:id="@+id/textview2"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="25dp" />
+
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -81,192 +103,121 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_margin="10dp"
             android:gravity="center"
+            android:layout_marginTop="100dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/clear"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_gray"
-                android:text="C"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
-
-            <Button
-                android:id="@+id/bracket"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_gray"
-                android:text="( )"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
-
-            <Button
-                android:id="@+id/rest"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_gray"
-                android:text="%"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
-
-            <Button
-                android:id="@+id/share"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/btn_light_yellow"
-                android:text="/"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
+            <ImageView
                 android:id="@+id/one"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="1"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/one"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/two"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="2"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/two"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/three"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="3"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/three"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/mul"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/btn_light_yellow"
-                android:text="x"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/money_del"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_margin="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/four"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="4"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/four"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/five"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="5"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/five"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/six"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="6"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/six"
+                android:scaleType="fitXY"
+                android:clickable="true"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/minus"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/btn_light_yellow"
-                android:text="ㅡ"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/money_move"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_margin="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/seven"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="7"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/seven"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/eight"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="8"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/eight"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/nine"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="9"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/nine"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/plus"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/btn_light_yellow"
-                android:text="+"
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/money_change"/>
 
         </LinearLayout>
 
@@ -274,51 +225,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_margin="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/zero"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="0"
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/zero"/>
 
             <Button
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:background="@drawable/btn_white"
                 android:visibility="invisible" />
 
-            <Button
+            <ImageView
                 android:id="@+id/dot"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_white"
-                android:text="."
-                android:textColor="#000000"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/dot"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/result"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/btn_light_yellow"
-                android:text="="
-                android:textColor="#ffffff"
-                android:textSize="40dp" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:src="@drawable/money_result"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             />
 
     </LinearLayout>
