@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,7 +34,7 @@ import java.util.Stack;
 public class MainActivity extends AppCompatActivity {
 
     Button button;
-    ImageView imageView_normal_cal,imageView_unit_cal, gold_cal, dis_cal, money_cal, school_cal;
+    //ImageView imageView_normal_cal,imageView_unit_cal, gold_cal, dis_cal, money_cal, school_cal;
     public static final int NORMAL_CALCULATOR = 0;
     public static final int UNIT_CALCULATOR = 1;
     public static final int GOLD_CALCULATOR = 2;
@@ -55,59 +56,76 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<School_item> list = new ArrayList<>();
     School_Adapter adapter;
 
-    int first;
+    int remove;
 
     TextView total1;
     TextView total2;
 
+    Button normal;
+    Button unit;
+    Button gold;
+    Button discount;
+    Button money;
+    Button school;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        imageView_normal_cal = findViewById(R.id.imageView_normal_cal);
-        imageView_normal_cal.setOnClickListener(new View.OnClickListener() {
+
+        normal = findViewById(R.id.normalicon);
+        normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(0);
             }
         });
 
-        imageView_unit_cal = findViewById(R.id.imageView_unit_cal);
+        /*imageView_unit_cal = findViewById(R.id.imageView_unit_cal);
         imageView_unit_cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBottomSheetDialog(1);
+            }
+        });*/
+
+        unit = findViewById(R.id.uniticon);
+        unit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(1);
             }
         });
 
-        gold_cal = findViewById(R.id.imageView_gold_cal);
-        gold_cal.setOnClickListener(new View.OnClickListener() {
+        gold = findViewById(R.id.goldicon);
+        gold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(2);
             }
         });
 
-        dis_cal = findViewById(R.id.imageView_discount_cal);
-        dis_cal.setOnClickListener(new View.OnClickListener() {
+        discount = findViewById(R.id.discounticon);
+        discount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(3);
             }
         });
 
-        money_cal = findViewById(R.id.imageView_money_cal);
-        money_cal.setOnClickListener(new View.OnClickListener() {
+        money = findViewById(R.id.moneyicon);
+        money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(4);
             }
         });
 
-        school_cal = findViewById(R.id.imageView_school_cal);
-        school_cal.setOnClickListener(new View.OnClickListener() {
+        school = findViewById(R.id.schoolicon);
+        school.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setBottomSheetDialog(5);
@@ -159,7 +177,12 @@ public class MainActivity extends AppCompatActivity {
 
     int bracket_open = 0;
     int number = 0;
+    int[] dis_number = new int[2];
+    int[] dis_dot = new int[2];
+    int[] dis_dot_check = new int[2];
     int sign = 0;
+    int ddot = 0;
+    int ddot_check = 0;
     int status = 0;
     int op = 1;
 
@@ -173,28 +196,29 @@ public class MainActivity extends AppCompatActivity {
         TextView textView1;
         TextView textView2;
         TextView textView3;
-        ImageView btn1;
-        ImageView btn2;
-        ImageView btn3;
-        ImageView btn4;
-        ImageView btn5;
-        ImageView btn6;
-        ImageView btn7;
-        ImageView btn8;
-        ImageView btn9;
-        ImageView btn0;
-        ImageView clear;
-        ImageView bracket;
-        ImageView rest;
-        ImageView share;
-        ImageView mul;
-        ImageView minus;
-        ImageView plus;
-        ImageView result;
+        Button btn1;
+        Button btn2;
+        Button btn3;
+        Button btn4;
+        Button btn5;
+        Button btn6;
+        Button btn7;
+        Button btn8;
+        Button btn9;
+        Button btn0;
+        Button dot;
+        Button clear;
+        Button bracket;
+        Button rest;
+        Button share;
+        Button mul;
+        Button minus;
+        Button plus;
+        Button result;
 
-        ImageView del;
-        ImageView move;
-        ImageView change;
+        Button del;
+        Button move;
+        Button change;
 
 
         View v;
@@ -205,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
                 bracket_open = 0;
                 number = 0;
                 sign = 0;
+                ddot = 0;
+                ddot_check = 0;
+
                 BottomSheetDialog normal_dialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
                 v  = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_default_cal,
                         (LinearLayout)findViewById(R.id.bottomSheetContainer));
@@ -221,9 +248,11 @@ public class MainActivity extends AppCompatActivity {
                 btn8 = v.findViewById(R.id.eight);
                 btn9 = v.findViewById(R.id.nine);
                 btn0 = v.findViewById(R.id.zero);
+                dot = v.findViewById(R.id.dot);
                 clear = v.findViewById(R.id.clear);
-                bracket = v.findViewById(R.id.bracket);
-                rest = v.findViewById(R.id.rest);   //percent
+                del = v.findViewById(R.id.del);
+                //bracket = v.findViewById(R.id.bracket);
+                //rest = v.findViewById(R.id.rest);   //percent
                 share = v.findViewById(R.id.share);
                 mul = v.findViewById(R.id.mul);
                 minus = v.findViewById(R.id.minus);
@@ -237,12 +266,69 @@ public class MainActivity extends AppCompatActivity {
                         textView2.setText("");
                         number = 0;
                         sign = 0;
+                        ddot = 0;
+                        bracket_open = 0;
+                        ddot_check = 0;
                     }
                 });
 
 
+                del.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String text0 = textView1.getText().toString();
+                        if(text0.length() > 1){
+                            String text00 = text0.substring(0, text0.length()-1);
 
-                bracket.setOnClickListener(new View.OnClickListener() {
+                            if(text00.charAt(text00.length()-1) == ' '){
+                                text00 = text0.substring(0, text0.length()-2);
+                            }
+
+                            textView1.setText(text00);
+                            textView2.setText("");
+
+                            if(text00.contains(".")){
+                                ddot_check = 1;
+                            }
+                            else{
+                                ddot_check = 0;
+                            }
+
+                            if(text00.charAt(text00.length()-1) == '.'){
+                                ddot = 1;
+                            }
+                            else{
+                                ddot = 0;
+                            }
+
+                            if(text00.charAt(text00.length()-1) == '+' || text00.charAt(text00.length()-1) == '-' || text00.charAt(text00.length()-1) == '*' || text00.charAt(text00.length()-1) == '/'){
+                                number = 0;
+                                sign = 1;
+                                ddot_check = 0;
+                                ddot = 0;
+                            }
+                            else{
+                                number = 1;
+                                sign = 0;
+                            }
+
+
+
+                        }
+                        else if(text0.length() == 1){
+                            textView1.setText("");
+                            textView2.setText("");
+                            bracket_open = 0;
+                            number = 0;
+                            sign = 0;
+                            ddot = 0;
+                            ddot_check = 0;
+                        }
+                    }
+                });
+
+
+                /*bracket.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(number == 0 && sign == 0){   //처음 시작
@@ -272,16 +358,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                });
+                });*/
 
-
-
-                rest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
 
 
 
@@ -294,6 +372,8 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                             number = 0;
                             sign = 1;
+                            ddot_check = 0;
+                            ddot = 0;
                         }
                     }
                 });
@@ -306,6 +386,8 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                             number = 0;
                             sign = 1;
+                            ddot_check = 0;
+                            ddot = 0;
                         }
                     }
                 });
@@ -318,6 +400,8 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                             number = 0;
                             sign = 1;
+                            ddot_check = 0;
+                            ddot = 0;
                         }
                     }
                 });
@@ -330,6 +414,8 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                             number = 0;
                             sign = 1;
+                            ddot_check = 0;
+                            ddot = 0;
                         }
                     }
                 });
@@ -346,18 +432,48 @@ public class MainActivity extends AppCompatActivity {
                             else{
                                 String txt = textView1.getText().toString();
                                 String result = getCalculate(txt);
-                                textView2.setText(result);
+
+                                if(remove == -1){
+                                    int len = result.length();
+                                    int cnt = 0;
+                                    for(int i=len - 1;i>=0;i--){
+                                        if(result.charAt(i) == '0'){
+                                            cnt++;
+                                        }
+                                        else{
+                                            break;
+                                        }
+                                    }
+                                    String result2 = result.substring(0,len-cnt);
+                                    textView2.setText(result2);
+                                }
+                                else{
+                                    textView2.setText(result);
+                                }
                             }
                         }
                     }
                 });
 
-
+                dot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ddot_check == 0 && number == 1){
+                            ddot_check = 1;
+                            ddot = 1;
+                            number = 0;
+                            sign = 1;
+                            String txt = textView1.getText().toString();
+                            txt += ".";
+                            textView1.setText(txt);
+                        }
+                    }
+                });
 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "1";
                             textView1.setText(txt);
@@ -367,7 +483,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 1";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1 || ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "1";
                             textView1.setText(txt);
@@ -377,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 1";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -384,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "2";
                             textView1.setText(txt);
@@ -394,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 2";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "2";
                             textView1.setText(txt);
@@ -404,6 +521,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 2";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -411,7 +529,7 @@ public class MainActivity extends AppCompatActivity {
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "3";
                             textView1.setText(txt);
@@ -421,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 3";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "3";
                             textView1.setText(txt);
@@ -431,6 +549,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 3";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -438,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "4";
                             textView1.setText(txt);
@@ -448,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 4";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "4";
                             textView1.setText(txt);
@@ -458,6 +577,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 4";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -465,7 +585,7 @@ public class MainActivity extends AppCompatActivity {
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "5";
                             textView1.setText(txt);
@@ -475,7 +595,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 5";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "5";
                             textView1.setText(txt);
@@ -485,6 +605,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 5";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -492,7 +613,7 @@ public class MainActivity extends AppCompatActivity {
                 btn6.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "6";
                             textView1.setText(txt);
@@ -502,7 +623,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 6";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "6";
                             textView1.setText(txt);
@@ -512,6 +633,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 6";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -519,7 +641,7 @@ public class MainActivity extends AppCompatActivity {
                 btn7.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "7";
                             textView1.setText(txt);
@@ -529,7 +651,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 7";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "7";
                             textView1.setText(txt);
@@ -539,6 +661,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 7";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -546,7 +669,7 @@ public class MainActivity extends AppCompatActivity {
                 btn8.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "8";
                             textView1.setText(txt);
@@ -556,7 +679,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 8";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "8";
                             textView1.setText(txt);
@@ -566,6 +689,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 8";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -573,7 +697,7 @@ public class MainActivity extends AppCompatActivity {
                 btn9.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == -1){
+                        if(number == -1 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "9";
                             textView1.setText(txt);
@@ -583,7 +707,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " * 9";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "9";
                             textView1.setText(txt);
@@ -593,6 +717,7 @@ public class MainActivity extends AppCompatActivity {
                             txt += " 9";
                             textView1.setText(txt);
                         }
+                        ddot = 0;
                         number = 1;
                         sign = 0;
                     }
@@ -600,7 +725,7 @@ public class MainActivity extends AppCompatActivity {
                 btn0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             number = -1;
                             String txt = textView1.getText().toString();
                             txt += " 0";
@@ -613,12 +738,14 @@ public class MainActivity extends AppCompatActivity {
                             sign = 0;
                             number = -1;
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "0";
                             textView1.setText(txt);
                             sign = 0;
+                            number = 1;
                         }
+                        ddot = 0;
                     }
                 });
 
@@ -633,6 +760,9 @@ public class MainActivity extends AppCompatActivity {
                 number = 0;
                 status = 0;
                 op = 1;
+                ddot = 0;
+                ddot_check = 0;
+
                 BottomSheetDialog unit_dialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
                 v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_unit_cal,
                         (LinearLayout)findViewById(R.id.bottomSheetContainer_unit_cal));
@@ -650,10 +780,11 @@ public class MainActivity extends AppCompatActivity {
                 btn8 = v.findViewById(R.id.eight);
                 btn9 = v.findViewById(R.id.nine);
                 btn0 = v.findViewById(R.id.zero);
+                dot = v.findViewById(R.id.dot);
                 result = v.findViewById(R.id.result);
-                del = v.findViewById(R.id.mul);
-                move = v.findViewById(R.id.minus);
-                change = v.findViewById(R.id.plus);
+                del = v.findViewById(R.id.del);
+                move = v.findViewById(R.id.gonormal);
+                change = v.findViewById(R.id.changing);
 
                 LinearLayout uplayout2 = v.findViewById(R.id.uplayout);
                 LinearLayout downlayout2 = v.findViewById(R.id.downlayout);
@@ -673,24 +804,34 @@ public class MainActivity extends AppCompatActivity {
                 change.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*if(status == 0){
-                            status = 1;
-                            op = 0;
-                            unit_text[1].setText("");
-                            number = 0;
-                            uplayout2.setBackgroundResource(R.drawable.notfocus);
-                            downlayout2.setBackgroundResource(R.drawable.focus2);
-                        }
-                        else{
-                            status = 0;
-                            op = 1;
-                            unit_text[0].setText("");
-                            number = 0;
-                            uplayout2.setBackgroundResource(R.drawable.focus2);
-                            downlayout2.setBackgroundResource(R.drawable.notfocus);
-                        }*/
+                        int p1 = spinners[0].getSelectedItemPosition();
+                        int p2 = spinners[1].getSelectedItemPosition();
+
+                        spinners[0].setSelection(p2);
+                        spinners[1].setSelection(p1);
+
+                        unit_text[0].setText("");
+                        unit_text[1].setText("");
+                        ddot = 0;
+                        ddot_check = 0;
+                        number = 0;
                     }
                 });
+
+                dot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ddot_check == 0 && number == 1){
+                            ddot_check = 1;
+                            ddot = 1;
+                            number = 0;
+                            String txt = unit_text[0].getText().toString();
+                            txt += ".";
+                            unit_text[0].setText(txt);
+                        }
+                    }
+                });
+
 
                 result.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -698,7 +839,7 @@ public class MainActivity extends AppCompatActivity {
                         String sel1 = spinners[0].getSelectedItem().toString();
                         String sel2 = spinners[1].getSelectedItem().toString();
 
-                        if(number != 0){
+                        if(number != 0 && ddot == 0){
                             String num1 = unit_text[0].getText().toString();
                             Double n1 = Double.parseDouble(num1);
 
@@ -1063,16 +1204,38 @@ public class MainActivity extends AppCompatActivity {
                 del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        unit_text[0].setText("");
-                        unit_text[1].setText("");
-                        number = 0;
+                        String text0 = unit_text[0].getText().toString();
+                        if(text0.length() > 1){
+                            String text00 = text0.substring(0, text0.length()-1);
+                            unit_text[0].setText(text00);
+                            unit_text[1].setText("");
+
+                            if(text00.contains(".")){
+                                ddot_check = 1;
+                            }
+                            else{
+                                ddot_check = 0;
+                            }
+
+                            if(text00.charAt(text00.length()-1) == '.'){
+                                ddot = 1;
+                            }
+                            else{
+                                ddot = 0;
+                            }
+                        }
+                        else if(text0.length() == 1){
+                            unit_text[0].setText("");
+                            unit_text[1].setText("");
+                            number = 0;
+                        }
                     }
                 });
 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "1";
                             unit_text[status].setText(txt);
@@ -1082,18 +1245,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "1";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "1";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "2";
                             unit_text[status].setText(txt);
@@ -1103,18 +1267,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "2";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "2";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "3";
                             unit_text[status].setText(txt);
@@ -1124,18 +1289,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "3";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "3";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "4";
                             unit_text[status].setText(txt);
@@ -1145,18 +1311,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "4";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "4";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "5";
                             unit_text[status].setText(txt);
@@ -1166,18 +1333,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "5";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "5";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn6.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "6";
                             unit_text[status].setText(txt);
@@ -1187,18 +1355,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "6";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "6";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn7.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "7";
                             unit_text[status].setText(txt);
@@ -1208,18 +1377,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "7";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "7";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn8.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "8";
                             unit_text[status].setText(txt);
@@ -1229,18 +1399,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "8";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "8";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn9.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "9";
                             unit_text[status].setText(txt);
@@ -1250,18 +1421,19 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "9";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "9";
                             unit_text[status].setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = unit_text[status].getText().toString();
                             txt += "0";
                             unit_text[status].setText(txt);
@@ -1272,11 +1444,13 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "0";
                             unit_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1|| ddot == 1){
                             String txt = unit_text[status].getText().toString();
                             txt += "0";
                             unit_text[status].setText(txt);
+                            number = 1;
                         }
+                        ddot = 0;
                     }
                 });
 
@@ -1290,6 +1464,9 @@ public class MainActivity extends AppCompatActivity {
 
             case GOLD_CALCULATOR:
                 number = 0;
+                ddot = 0;
+                ddot_check = 0;
+
                 BottomSheetDialog gold_dialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
                 v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_gold_cal,
                         (LinearLayout)findViewById(R.id.bottomSheetContainer_gold_cal));
@@ -1308,10 +1485,11 @@ public class MainActivity extends AppCompatActivity {
                 btn8 = v.findViewById(R.id.eight);
                 btn9 = v.findViewById(R.id.nine);
                 btn0 = v.findViewById(R.id.zero);
+                dot = v.findViewById(R.id.dot);
                 result = v.findViewById(R.id.result);
-                del = v.findViewById(R.id.mul);
-                move = v.findViewById(R.id.minus);
-                change = v.findViewById(R.id.plus);
+                del = v.findViewById(R.id.del);
+                move = v.findViewById(R.id.gonormal);
+                clear = v.findViewById(R.id.clear);
 
                 move.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1327,7 +1505,7 @@ public class MainActivity extends AppCompatActivity {
                         if(number == 0){
                             str1 = "0";
                         }
-                        int num1 = Integer.parseInt(str1);
+                        Double num1 = Double.parseDouble(str1);
                         String str = spinner.getSelectedItem().toString();
                         double tgram = Double.parseDouble(p1);
 
@@ -1336,36 +1514,27 @@ public class MainActivity extends AppCompatActivity {
 
                         if(str.equals("돈")){
                             double res = num1 * onedon;
-                            textView2.setText(Double.toString(res)+" 원");
+                            textView2.setText(String.format("%.2f", res)+" 원");
+                           // textView2.setText(Double.toString(res)+" 원");
                         }
                         else if(str.equals("그램")){
                             double res = num1 * onedon / tgram;
-                            textView2.setText(Double.toString(res)+" 원");
+                            textView2.setText(String.format("%.2f", res)+" 원");
+
                         }
                     }
                 });
 
-                change.setOnClickListener(new View.OnClickListener() {
+                dot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String str1 = textView1.getText().toString();
-                        if(number == 0){
-                            str1 = "0";
-                        }
-                        int num1 = Integer.parseInt(str1);
-                        String str = spinner.getSelectedItem().toString();
-                        double tgram = Double.parseDouble(p1);
-
-                        String od = p2.replace(",","");
-                        double onedon = Double.parseDouble(od);
-
-                        if(str.equals("돈")){
-                            double res = num1 * onedon;
-                            textView2.setText(Double.toString(res)+" 원");
-                        }
-                        else if(str.equals("그램")){
-                            double res = num1 * onedon / tgram;
-                            textView2.setText(Double.toString(res)+" 원");
+                        if(ddot_check == 0 && number == 1){
+                            ddot_check = 1;
+                            ddot = 1;
+                            number = 0;
+                            String txt = textView1.getText().toString();
+                            txt += ".";
+                            textView1.setText(txt);
                         }
                     }
                 });
@@ -1373,9 +1542,42 @@ public class MainActivity extends AppCompatActivity {
                 del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String text0 = textView1.getText().toString();
+                        if(text0.length() > 1){
+                            String text00 = text0.substring(0, text0.length()-1);
+                            textView1.setText(text00);
+                            textView2.setText("");
+
+                            if(text00.contains(".")){
+                                ddot_check = 1;
+                            }
+                            else{
+                                ddot_check = 0;
+                            }
+
+                            if(text00.charAt(text00.length()-1) == '.'){
+                                ddot = 1;
+                            }
+                            else{
+                                ddot = 0;
+                            }
+                        }
+                        else if(text0.length() == 1){
+                            textView1.setText("");
+                            textView2.setText("");
+                            number = 0;
+                        }
+                    }
+                });
+
+                clear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         textView1.setText("");
                         textView2.setText("");
                         number = 0;
+                        ddot = 0;
+                        ddot_check = 0;
                     }
                 });
 
@@ -1397,7 +1599,8 @@ public class MainActivity extends AppCompatActivity {
                            txt += "1";
                            textView1.setText(txt);
                        }
-                        number = 1;
+                       number = 1;
+                       ddot = 0;
                     }
                 });
                 btn2.setOnClickListener(new View.OnClickListener() {
@@ -1419,6 +1622,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn3.setOnClickListener(new View.OnClickListener() {
@@ -1440,6 +1644,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn4.setOnClickListener(new View.OnClickListener() {
@@ -1461,6 +1666,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn5.setOnClickListener(new View.OnClickListener() {
@@ -1482,6 +1688,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn6.setOnClickListener(new View.OnClickListener() {
@@ -1503,6 +1710,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn7.setOnClickListener(new View.OnClickListener() {
@@ -1524,6 +1732,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn8.setOnClickListener(new View.OnClickListener() {
@@ -1545,6 +1754,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn9.setOnClickListener(new View.OnClickListener() {
@@ -1566,12 +1776,13 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt += "0";
                             textView1.setText(txt);
@@ -1582,11 +1793,13 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "0";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1 || ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "0";
                             textView1.setText(txt);
+                            number = 1;
                         }
+                        ddot = 0;
                     }
                 });
                 gold_dialog.setContentView(v);
@@ -1598,6 +1811,12 @@ public class MainActivity extends AppCompatActivity {
 
             case DISCOUNT_CALCULATOR:
                 number = 0;
+                dis_number[0] = 0;
+                dis_number[1] = 0;
+                dis_dot[0] = 0;
+                dis_dot[1] = 0;
+                dis_dot_check[0] = 0;
+                dis_dot_check[1] = 0;
                 status = 0;
                 BottomSheetDialog discount_dialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
                 v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_discount_cal,
@@ -1616,18 +1835,29 @@ public class MainActivity extends AppCompatActivity {
                 btn8 = v.findViewById(R.id.eight);
                 btn9 = v.findViewById(R.id.nine);
                 btn0 = v.findViewById(R.id.zero);
+                dot = v.findViewById(R.id.dot);
                 result = v.findViewById(R.id.result);
-                del = v.findViewById(R.id.mul);
-                move = v.findViewById(R.id.minus);
-                change = v.findViewById(R.id.plus);
+                del = v.findViewById(R.id.del);
+                //move = v.findViewById(R.id.gonormal);
+                clear = v.findViewById(R.id.clear);
+                change = v.findViewById(R.id.changing);
 
                 LinearLayout uplayout = v.findViewById(R.id.uplayout);
                 LinearLayout downlayout = v.findViewById(R.id.downlayout);
 
-                move.setOnClickListener(new View.OnClickListener() {
+                clear.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        setBottomSheetDialog(0);
+                        dis_text[0].setText("");
+                        dis_text[1].setText("");
+                        dis_text[2].setText("");
+                        number = 0;
+                        dis_number[0] = 0;
+                        dis_number[1] = 0;
+                        dis_dot[0] = 0;
+                        dis_dot[1] = 0;
+                        dis_dot_check[0] = 0;
+                        dis_dot_check[1] = 0;
                     }
                 });
 
@@ -1636,15 +1866,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if(status == 0){
                             status = 1;
-                            dis_text[1].setText("");
-                            number = 0;
                             uplayout.setBackgroundResource(R.drawable.notfocus);
                             downlayout.setBackgroundResource(R.drawable.focus);
                         }
                         else{
                             status = 0;
-                            dis_text[0].setText("");
-                            number = 0;
                             uplayout.setBackgroundResource(R.drawable.focus);
                             downlayout.setBackgroundResource(R.drawable.notfocus);
                         }
@@ -1654,13 +1880,14 @@ public class MainActivity extends AppCompatActivity {
                 result.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number != 0){
+                        if(dis_number[0] != 0 && dis_number[1] != 0){
                             double orig = Double.parseDouble(dis_text[0].getText().toString());
                             double perc = Double.parseDouble(dis_text[1].getText().toString());
 
                             double result = orig * perc / 100;
 
-                            dis_text[2].setText(Double.toString(result));
+                            dis_text[2].setText(String.format("%.2f", result));
+                            //dis_text[2].setText(Double.toString(result));
                         }
                     }
                 });
@@ -1668,221 +1895,271 @@ public class MainActivity extends AppCompatActivity {
                 del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dis_text[0].setText("");
-                        dis_text[1].setText("");
-                        dis_text[2].setText("");
-                        number = 0;
+                        String text0 = dis_text[status].getText().toString();
+                        if(text0.length() > 1){
+                            String text00 = text0.substring(0, text0.length()-1);
+                            dis_text[status].setText(text00);
+                            dis_text[2].setText("");
+
+                            if(text00.contains(".")){
+                                dis_dot_check[status] = 1;
+                                //ddot_check = 1;
+                            }
+                            else{
+                                dis_dot_check[status] = 0;
+                            }
+
+                            if(text00.charAt(text00.length()-1) == '.'){
+                                dis_dot[status] = 1;
+                            }
+                            else{
+                                dis_dot[status] = 1;
+                            }
+                        }
+                        else if(text0.length() == 1){
+                            dis_text[status].setText("");
+                            dis_number[status] = 0;
+                            dis_dot[status] = 0;
+                            dis_dot_check[status] = 0;
+                            dis_text[2].setText("");
+                        }
+                    }
+                });
+
+                dot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(dis_dot_check[status] == 0 && dis_number[status] == 1){
+                            dis_dot_check[status] = 1;
+                            dis_dot[status] = 1;
+                            dis_number[status] = 0;
+                            String txt = dis_text[status].getText().toString();
+                            txt += ".";
+                            dis_text[status].setText(txt);
+                        }
                     }
                 });
 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "1";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "1";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "1";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "2";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "2";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "2";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "3";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "3";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "3";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "4";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "4";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "4";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "5";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "5";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "5";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn6.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "6";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "6";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "6";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn7.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "7";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "7";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "7";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn8.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "8";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "8";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "8";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn9.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "9";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "9";
                             dis_text[status].setText(txt);
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "9";
                             dis_text[status].setText(txt);
                         }
-                        number = 1;
+                        dis_number[status] = 1;
+                        dis_dot[status] = 0;
                     }
                 });
                 btn0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(dis_number[status] == 0 && dis_dot[status] == 0){
                             String txt = dis_text[status].getText().toString();
                             txt += "0";
                             dis_text[status].setText(txt);
-                            number = -1;
+                            dis_number[status] = -1;
                         }
-                        else if(number == -1){
+                        else if(dis_number[status] == -1){
                             String txt = dis_text[status].getText().toString();
                             txt = txt.substring(0,txt.length()-1) + "0";
                             dis_text[status].setText(txt);
+                            dis_number[status] = 1;
                         }
-                        else if(number == 1){
+                        else if(dis_number[status] == 1 || dis_dot[status] == 1){
                             String txt = dis_text[status].getText().toString();
                             txt += "0";
                             dis_text[status].setText(txt);
+                            dis_number[status] = 1;
                         }
+                        dis_dot[status] = 0;
                     }
                 });
 
@@ -1897,6 +2174,9 @@ public class MainActivity extends AppCompatActivity {
 
             case MONEY_CALCULATOR:
                 number = 0;
+                ddot = 0;
+                ddot_check = 0;
+
                 BottomSheetDialog money_dialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
                 v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet_money_cal,
                         (LinearLayout)findViewById(R.id.bottomSheetContainer_money_cal));
@@ -1913,6 +2193,7 @@ public class MainActivity extends AppCompatActivity {
 
                 textView1 = v.findViewById(R.id.textview1);
                 textView2 = v.findViewById(R.id.textview2);
+                textView3 = v.findViewById(R.id.textview3);
                 btn1 = v.findViewById(R.id.one);
                 btn2 = v.findViewById(R.id.two);
                 btn3 = v.findViewById(R.id.three);
@@ -1923,10 +2204,11 @@ public class MainActivity extends AppCompatActivity {
                 btn8 = v.findViewById(R.id.eight);
                 btn9 = v.findViewById(R.id.nine);
                 btn0 = v.findViewById(R.id.zero);
+                dot = v.findViewById(R.id.dot);
                 result = v.findViewById(R.id.result);
-                del = v.findViewById(R.id.mul);
-                move = v.findViewById(R.id.minus);
-                change = v.findViewById(R.id.plus);
+                del = v.findViewById(R.id.del);
+                move = v.findViewById(R.id.gonormal);
+                change = v.findViewById(R.id.changing);
 
                 move.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1941,165 +2223,215 @@ public class MainActivity extends AppCompatActivity {
                         String str1 = spinner1.getSelectedItem().toString();
                         String str2 = spinner2.getSelectedItem().toString();
 
-                        if(str1.equals("한국")){
-                            if(str2.equals("한국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                Double m2 = m1;
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("미국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 / us);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("유럽")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 / er);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("일본")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 / jp);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("중국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 / ch);
-                                textView2.setText(m2+"");
+                        if(number != 0 && ddot != 1) {
+                            if (str1.equals("한국")) {
+                                if (str2.equals("한국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    Double m2 = m1;
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("원");
+                                } else if (str2.equals("미국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 / us);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("달러");
+                                } else if (str2.equals("유럽")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 / er);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("유로");
+                                } else if (str2.equals("일본")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 / jp);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("엔");
+                                } else if (str2.equals("중국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 / ch);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("위안");
+                                }
+                            } else if (str1.equals("미국")) {
+                                if (str2.equals("한국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * us);
+                                    textView2.setText(m2+"");
+                                    textView3.setText("원");
+                                } else if (str2.equals("미국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    Double m2 = m1;
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("달러");
+                                } else if (str2.equals("유럽")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * us / er);
+                                    textView2.setText(m2+"");
+                                    textView3.setText("유로");
+                                } else if (str2.equals("일본")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * us / jp);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("엔");
+                                } else if (str2.equals("중국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * us / ch);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("위안");
+                                }
+                            } else if (str1.equals("유럽")) {
+                                if (str2.equals("한국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * er);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("원");
+                                } else if (str2.equals("미국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * er / us);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("달러");
+                                } else if (str2.equals("유럽")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    Double m2 = m1;
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("유로");
+                                } else if (str2.equals("일본")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * er / jp);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("엔");
+                                } else if (str2.equals("중국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * er / ch);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("위안");
+                                }
+                            } else if (str1.equals("일본")) {
+                                if (str2.equals("한국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * jp);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("원");
+                                } else if (str2.equals("미국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * jp / us);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("달러");
+                                } else if (str2.equals("유럽")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * jp / er);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("유로");
+                                } else if (str2.equals("일본")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    Double m2 = m1;
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("엔");
+                                } else if (str2.equals("중국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * jp / ch);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("위안");
+                                }
+                            } else if (str1.equals("중국")) {
+                                if (str2.equals("한국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * ch);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("원");
+                                } else if (str2.equals("미국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * ch / us);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("달러");
+                                } else if (str2.equals("유럽")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * ch / er);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("유로");
+                                } else if (str2.equals("일본")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    String m2 = String.format("%.2f", m1 * ch / jp);
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("엔");
+                                } else if (str2.equals("중국")) {
+                                    String s1 = textView1.getText().toString();
+                                    Double m1 = Double.parseDouble(s1);
+                                    Double m2 = m1;
+                                    textView2.setText(m2 + "");
+                                    textView3.setText("위안");
+                                }
                             }
                         }
-                        else if(str1.equals("미국")){
-                            if(str2.equals("한국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * us);
-                                textView2.setText(m2);
+                    }
+                });
+
+                dot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ddot_check == 0 && number == 1){
+                            ddot_check = 1;
+                            ddot = 1;
+                            number = 0;
+                            String txt = textView1.getText().toString();
+                            txt += ".";
+                            textView1.setText(txt);
+                        }
+                    }
+                });
+
+                del.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String text0 = textView1.getText().toString();
+                        if(text0.length() > 1){
+                            String text00 = text0.substring(0, text0.length()-1);
+                            textView1.setText(text00);
+                            textView2.setText("");
+                            textView3.setText("");
+
+                            if(text00.contains(".")){
+                                ddot_check = 1;
                             }
-                            else if(str2.equals("미국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                Double m2 = m1;
-                                textView2.setText(m2+"");
+                            else{
+                                ddot_check = 0;
                             }
-                            else if(str2.equals("유럽")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * us / er);
-                                textView2.setText(m2);
+
+                            if(text00.charAt(text00.length()-1) == '.'){
+                                ddot = 1;
                             }
-                            else if(str2.equals("일본")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * us / jp);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("중국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * us / ch);
-                                textView2.setText(m2+"");
+                            else{
+                                ddot = 0;
                             }
                         }
-                        else if(str1.equals("유럽")){
-                            if(str2.equals("한국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * er);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("미국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * er / us);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("유럽")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                Double m2 = m1;
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("일본")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * er / jp);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("중국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * er / ch);
-                                textView2.setText(m2+"");
-                            }
-                        }
-                        else if(str1.equals("일본")){
-                            if(str2.equals("한국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * jp);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("미국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * jp / us);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("유럽")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * jp / er);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("일본")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                Double m2 = m1;
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("중국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * jp / ch);
-                                textView2.setText(m2+"");
-                            }
-                        }
-                        else if(str1.equals("중국")){
-                            if(str2.equals("한국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * ch);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("미국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * ch / us);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("유럽")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * ch / er);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("일본")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                String m2 = String.format("%.2f", m1 * ch / jp);
-                                textView2.setText(m2+"");
-                            }
-                            else if(str2.equals("중국")){
-                                String s1 = textView1.getText().toString();
-                                Double m1 = Double.parseDouble(s1);
-                                Double m2 = m1;
-                                textView2.setText(m2+"");
-                            }
+                        else if(text0.length() == 1){
+                            textView1.setText("");
+                            textView2.setText("");
+                            textView3.setText("");
+                            number = 0;
                         }
                     }
                 });
@@ -2107,18 +2439,18 @@ public class MainActivity extends AppCompatActivity {
                 change.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int p1 = spinner1.getSelectedItemPosition();
+                        int p2 = spinner2.getSelectedItemPosition();
 
+                        spinner1.setSelection(p2);
+                        spinner2.setSelection(p1);
 
-
-                    }
-                });
-
-                del.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
                         textView1.setText("");
                         textView2.setText("");
+                        textView3.setText("");
                         number = 0;
+                        ddot = 0;
+                        ddot_check = 0;
                     }
                 });
 
@@ -2141,6 +2473,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn2.setOnClickListener(new View.OnClickListener() {
@@ -2162,6 +2495,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn3.setOnClickListener(new View.OnClickListener() {
@@ -2183,6 +2517,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn4.setOnClickListener(new View.OnClickListener() {
@@ -2204,6 +2539,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn5.setOnClickListener(new View.OnClickListener() {
@@ -2225,6 +2561,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn6.setOnClickListener(new View.OnClickListener() {
@@ -2246,6 +2583,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn7.setOnClickListener(new View.OnClickListener() {
@@ -2267,6 +2605,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn8.setOnClickListener(new View.OnClickListener() {
@@ -2288,6 +2627,7 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn9.setOnClickListener(new View.OnClickListener() {
@@ -2309,12 +2649,13 @@ public class MainActivity extends AppCompatActivity {
                             textView1.setText(txt);
                         }
                         number = 1;
+                        ddot = 0;
                     }
                 });
                 btn0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(number == 0){
+                        if(number == 0 && ddot == 0){
                             String txt = textView1.getText().toString();
                             txt += "0";
                             textView1.setText(txt);
@@ -2325,11 +2666,13 @@ public class MainActivity extends AppCompatActivity {
                             txt = txt.substring(0,txt.length()-1) + "0";
                             textView1.setText(txt);
                         }
-                        else if(number == 1){
+                        else if(number == 1 || ddot == 1){
                             String txt = textView1.getText().toString();
                             txt += "0";
                             textView1.setText(txt);
+                            number = 1;
                         }
+                        ddot = 0;
                     }
                 });
 
@@ -2584,9 +2927,11 @@ public class MainActivity extends AppCompatActivity {
         //나머지 연산
         double divde = Double.parseDouble(result) % Double.parseDouble(mok);
 
+        remove = -1;
         //나머지가 0이면 소수점 자릿 수 안보이게
         if (divde == 0) {
             result = String.format("%.0f", re);
+            remove = 1;
         }
 
         return result;

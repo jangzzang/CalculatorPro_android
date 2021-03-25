@@ -30,6 +30,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="원래 가격"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="15dp"/>
 
 
@@ -39,6 +41,8 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:layout_marginRight="4dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:gravity="right"
                 android:textSize="25dp"/>
 
@@ -46,6 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="원"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:layout_marginRight="8dp"
                 android:gravity="center_horizontal"
                 android:textSize="15dp" />
@@ -71,6 +77,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="할인 퍼센트"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="15dp"/>
 
             <TextView
@@ -80,12 +88,16 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:layout_marginRight="4dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="25dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:text="%"
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:layout_marginRight="8dp"
                 android:gravity="center_horizontal"
                 android:textSize="15dp" />
@@ -112,6 +124,8 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:text="최종 가격"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="15dp"/>
 
                 <TextView
@@ -121,11 +135,15 @@
                     android:layout_weight="1"
                     android:layout_marginRight="4dp"
                     android:gravity="right"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="25dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:text="원"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:layout_marginRight="8dp"
                     android:gravity="center_horizontal"
                     android:textSize="15dp" />
@@ -138,19 +156,53 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:gravity="center"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <Button
                 android:id="@+id/one"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:scaleType="fitXY"
-                android:clickable="true"
-                android:src="@drawable/one"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/two"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="2"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/three"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="3"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/del"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_discount"/>
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/two"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -172,7 +224,7 @@
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
                 android:clickable="true"
-                android:src="@drawable/discount_del"/>
+                android:src="@drawable/normal_mul"/>-->
 
         </LinearLayout>
 
@@ -180,9 +232,51 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <Button
+                android:id="@+id/four"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="4"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/five"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="5"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/six"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="6"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_discount"/>
+
+            <!--<ImageView
                 android:id="@+id/four"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -212,7 +306,7 @@
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
                 android:clickable="true"
-                android:src="@drawable/discount_move"/>
+                android:src="@drawable/normal_minus"/>-->
 
         </LinearLayout>
 
@@ -220,9 +314,51 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <Button
+                android:id="@+id/seven"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="7"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/eight"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="8"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/nine"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="9"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/changing"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/discount_change"/>
+
+            <!--<ImageView
                 android:id="@+id/seven"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -252,7 +388,7 @@
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
                 android:clickable="true"
-                android:src="@drawable/discount_change"/>
+                android:src="@drawable/normal_plus"/>-->
 
         </LinearLayout>
 
@@ -263,7 +399,49 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <Button
+                android:id="@+id/zero"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="8"
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:visibility="invisible"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/dot"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="."
+                android:textColor="#000000"
+                android:textSize="35dp"
+                android:background="@drawable/btn_white"/>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/result"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/btn_discount"
+                android:textColor="#ffffff"
+                android:textSize="35dp" />
+
+            <!--<ImageView
                 android:id="@+id/zero"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -291,7 +469,7 @@
                 android:layout_height="90dp"
                 android:scaleType="fitXY"
                 android:clickable="true"
-                android:src="@drawable/discount_result"/>
+                android:src="@drawable/normal_result"/>-->
 
         </LinearLayout>
 

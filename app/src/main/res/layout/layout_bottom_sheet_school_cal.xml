@@ -41,6 +41,7 @@
                         android:gravity="center_vertical"
                         android:text="      과목명"
                         android:textColor="#ffffff"
+                        android:textStyle="bold"
                         android:textSize="15dp" />
                     <TextView
                         android:layout_width="0dp"
@@ -48,6 +49,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="학점"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
                     <TextView
@@ -56,6 +58,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="평점"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
 
@@ -104,6 +107,7 @@
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:text="      평균 평점"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
                     <TextView
@@ -113,6 +117,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
                     <TextView
@@ -122,6 +127,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="0"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:textSize="15dp" />
 
