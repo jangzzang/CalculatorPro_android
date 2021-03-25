@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.Objects;
 
 public class PopupActivity extends Activity {
 
@@ -29,6 +33,8 @@ public class PopupActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_popup);
+
+        Objects.requireNonNull(getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         Intent intent = getIntent();
@@ -69,8 +75,5 @@ public class PopupActivity extends Activity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        return;
-    }
+
 }
