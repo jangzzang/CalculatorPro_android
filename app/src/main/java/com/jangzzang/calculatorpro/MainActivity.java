@@ -1884,7 +1884,7 @@ public class MainActivity extends AppCompatActivity {
                             double orig = Double.parseDouble(dis_text[0].getText().toString());
                             double perc = Double.parseDouble(dis_text[1].getText().toString());
 
-                            double result = orig * perc / 100;
+                            double result = orig - (orig * perc / 100);
 
                             dis_text[2].setText(String.format("%.2f", result));
                             //dis_text[2].setText(Double.toString(result));
