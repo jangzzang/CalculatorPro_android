@@ -2720,7 +2720,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setOnOtherClickListener(new School_Adapter.OnOtherClickListener() {
                     @Override
                     public void onOtherClick(View v, int position) {
-                        String name = list.get(position).getName();
+                        /*String name = list.get(position).getName();
                         String score1 = list.get(position).getScore1();
                         Double d1 = Double.parseDouble(score1);
                         String score2 = list.get(position).getScore2();
@@ -2743,11 +2743,36 @@ public class MainActivity extends AppCompatActivity {
                         else{
                             Double res2 = ((d3*d4) - (d1*d2))/res;
                             total2.setText(String.format("%.2f", res2));
-                        }
+                        }*/
 
-
+                        double total111 = 0.0;
+                        double total222 = 0.0;
 
                         list.remove(position);
+
+                        for(int i=0;i<list.size() - 1;i++){
+                            String s1 = list.get(i).getScore1();
+                            String s2 = list.get(i).getScore2();
+
+                            Double n1 = Double.parseDouble(s1);
+                            Double n2 = Double.parseDouble(s2);
+
+                            total111 += n1;
+                            total222 += n1 * n2;
+                        }
+
+                        total1.setText(String.format("%.2f", total111));
+
+                        Double ans = 0.0;
+                        if(total111 == 0){
+                            ans = 0.0;
+                        }
+                        else{
+                            ans = total222 / total111;
+                        }
+
+                        total2.setText(String.format("%.2f", ans));
+
                         adapter.notifyItemRemoved(position);
                     }
                 });
@@ -2782,7 +2807,28 @@ public class MainActivity extends AppCompatActivity {
                 list.add(new School_item(null, null, null, 2));
                 adapter.notifyItemRangeChanged(pos, 2);
 
-                String t1 = total1.getText().toString();
+                double total11 = 0.0;
+                double total22 = 0.0;
+
+                for(int i=0;i<list.size() - 1;i++){
+                    String s1 = list.get(i).getScore1();
+                    String s2 = list.get(i).getScore2();
+
+                    Double n1 = Double.parseDouble(s1);
+                    Double n2 = Double.parseDouble(s2);
+
+                    total11 += n1;
+                    total22 += n1 * n2;
+                }
+
+                total1.setText(String.format("%.2f", total11));
+
+                Double ans = total22 / total11;
+
+                total2.setText(String.format("%.2f", ans));
+
+
+                /*String t1 = total1.getText().toString();
                 Double n1 = Double.parseDouble(t1);
 
                 String t2 = score1;
@@ -2795,7 +2841,7 @@ public class MainActivity extends AppCompatActivity {
                 //현재 평점
                 String t3 = total2.getText().toString();
 
-                /*if(score2.equals("PASS")){
+                *//*if(score2.equals("PASS")){
                     Double n3 = Double.parseDouble(t3);
 
                     String t4 = t3;
@@ -2819,7 +2865,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
 
 
-                }*/
+                }*//*
 
                 Double n3 = Double.parseDouble(t3);
 
@@ -2828,7 +2874,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Double res2 = (n3 * n1 + n4 * n2)/res;
                 //total2.setText(res2+"");
-                total2.setText(String.format("%.2f", res2));
+                total2.setText(String.format("%.2f", res2));*/
 
             }
         }
