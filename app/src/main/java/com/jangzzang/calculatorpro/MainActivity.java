@@ -278,10 +278,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String text0 = textView1.getText().toString();
                         if(text0.length() > 1){
-                            String text00 = text0.substring(0, text0.length()-1);
+                            String text00 = text0.substring(0, text0.length() - 1);
 
                             if(text00.charAt(text00.length()-1) == ' '){
-                                text00 = text0.substring(0, text0.length()-2);
+                                text00 = text0.substring(0, text0.length() - 2);
                             }
 
                             textView1.setText(text00);
@@ -294,18 +294,25 @@ public class MainActivity extends AppCompatActivity {
                                 ddot_check = 0;
                             }
 
-                            if(text00.charAt(text00.length()-1) == '.'){
+                            if(text00.length() > 0 && text00.charAt(text00.length()-1) == '.'){
                                 ddot = 1;
                             }
                             else{
                                 ddot = 0;
                             }
 
-                            if(text00.charAt(text00.length()-1) == '+' || text00.charAt(text00.length()-1) == '-' || text00.charAt(text00.length()-1) == '*' || text00.charAt(text00.length()-1) == '/'){
+                            if(text00.length() > 0 && (text00.charAt(text00.length()-1) == '+' || text00.charAt(text00.length()-1) == '-' || text00.charAt(text00.length()-1) == '*' || text00.charAt(text00.length()-1) == '/')){
                                 number = 0;
                                 sign = 1;
                                 ddot_check = 0;
                                 ddot = 0;
+                            }
+                            else if(text00.length() == 0){
+                                bracket_open = 0;
+                                number = 0;
+                                sign = 0;
+                                ddot = 0;
+                                ddot_check = 0;
                             }
                             else{
                                 number = 1;

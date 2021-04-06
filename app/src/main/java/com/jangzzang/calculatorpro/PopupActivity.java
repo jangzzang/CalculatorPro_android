@@ -41,8 +41,8 @@ public class PopupActivity extends Activity {
         pos = intent.getIntExtra("pos", 0);
 
         e11 = findViewById(R.id.e11);
-        e22 = findViewById(R.id.e22);
-        e33 = findViewById(R.id.e33);
+        //e22 = findViewById(R.id.e22);
+        //e33 = findViewById(R.id.e33);
         complete = findViewById(R.id.complete);
 
         complete.setOnClickListener(new View.OnClickListener() {

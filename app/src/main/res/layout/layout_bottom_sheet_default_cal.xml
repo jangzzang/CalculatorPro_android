@@ -45,7 +45,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:textSize="35dp"
-                android:background="@drawable/btn_gray"/>
+                android:background="@drawable/normal_clear2"/>
 
             <View
                 android:layout_width="10dp"
@@ -66,7 +66,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:textSize="35dp"
-                android:background="@drawable/btn_gray"/>
+                android:background="@drawable/normal_del2"/>
             <View
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"/>
@@ -76,7 +76,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:textSize="35dp"
-                android:background="@drawable/btn_nomal"/>
+                android:background="@drawable/normal_sh"/>
 
         </LinearLayout>
 
@@ -126,7 +126,7 @@
                 android:layout_height="70dp"
                 android:textColor="#000000"
                 android:textSize="35dp"
-                android:background="@drawable/btn_nomal"/>
+                android:background="@drawable/normal_ml"/>
 
             <!--<ImageView
                 android:id="@+id/two"
@@ -200,7 +200,7 @@
                 android:layout_height="70dp"
                 android:textColor="#000000"
                 android:textSize="35dp"
-                android:background="@drawable/btn_nomal"/>
+                android:background="@drawable/normal_minuss"/>
 
             <!--<ImageView
                 android:id="@+id/four"
@@ -282,7 +282,7 @@
                 android:layout_height="70dp"
                 android:textColor="#000000"
                 android:textSize="35dp"
-                android:background="@drawable/btn_nomal"/>
+                android:background="@drawable/normal_plpl"/>
 
             <!--<ImageView
                 android:id="@+id/seven"
@@ -363,7 +363,7 @@
                 android:id="@+id/result"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/btn_nomal"
+                android:background="@drawable/normal_result2"
                 android:textColor="#ffffff"
                 android:textSize="35dp" />
 

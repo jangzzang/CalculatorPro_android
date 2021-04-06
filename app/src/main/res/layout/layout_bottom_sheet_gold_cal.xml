@@ -126,7 +126,7 @@
                 android:layout_height="70dp"
                 android:textColor="#000000"
                 android:textSize="35dp"
-                android:background="@drawable/btn_gold"/>
+                android:background="@drawable/gold_del2"/>
 
             <!--<ImageView
                 android:id="@+id/two"
@@ -200,7 +200,7 @@
                 android:layout_height="70dp"
                 android:textColor="#000000"
                 android:textSize="35dp"
-                android:background="@drawable/btn_gold"/>
+                android:background="@drawable/gold_clear2"/>
 
             <!--<ImageView
                 android:id="@+id/four"
@@ -363,7 +363,7 @@
                 android:id="@+id/result"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/btn_gold"
+                android:background="@drawable/gold_result2"
                 android:textColor="#ffffff"
                 android:textSize="35dp" />
 
