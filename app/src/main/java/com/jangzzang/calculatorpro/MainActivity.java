@@ -2790,9 +2790,37 @@ public class MainActivity extends AppCompatActivity {
 
                 Double res = n1 + n2;
                 //total1.setText(res+"");
-                total1.setText(String.format("%.1f", res));
+                total1.setText(String.format("%.2f", res));
 
+                //현재 평점
                 String t3 = total2.getText().toString();
+
+                /*if(score2.equals("PASS")){
+                    Double n3 = Double.parseDouble(t3);
+
+                    String t4 = t3;
+                    Double n4 = Double.parseDouble(t4);
+
+                    Double res2 = (n3 * n1 + n4 * n2)/res;
+                    //total2.setText(res2+"");
+                    total2.setText(String.format("%.2f", res2));
+                }
+                else if(score2.equals("FAIL")){
+
+                    Double n3 = Double.parseDouble(t3);
+
+                    String t4 = "0.0";
+                    Double n4 = Double.parseDouble(t4);
+
+                    Double res2 = (n3 * n1 + n4 * n2)/res;
+                    //total2.setText(res2+"");
+                    total2.setText(String.format("%.2f", res2));
+                }
+                else{
+
+
+                }*/
+
                 Double n3 = Double.parseDouble(t3);
 
                 String t4 = score2;

@@ -13,7 +13,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         try {
-            Thread.sleep(4000); //대기 초 설정
+            Thread.sleep(3000); //대기 초 설정
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } catch (Exception e) {

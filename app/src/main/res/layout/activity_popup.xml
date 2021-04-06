@@ -5,29 +5,63 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/popuplayout"
-    android:padding="12dp"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="20dp"
     android:orientation="vertical"
     tools:context=".PopupActivity">
 
-    <LinearLayout
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:padding="4dp"
+        android:id="@+id/e11"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@drawable/popuplayout2"
+        android:hint="과목명"
+        android:gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="과목명"
-            android:textColor="#000000"/>
+    <!--<EditText
+        android:layout_marginTop="25dp"
+        android:padding="4dp"
+        android:id="@+id/e22"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@drawable/popuplayout2"
+        android:hint="학점 (ex 3)"
+        android:inputType="number"
+        android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/e11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="과목명"
-            android:gravity="center"/>
+    <EditText
+        android:layout_marginTop="25dp"
+        android:padding="4dp"
+        android:id="@+id/e33"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@drawable/popuplayout2"
+        android:hint="성적 (ex 4.3)"
+        android:inputType="number"
+        android:gravity="center"/>-->
 
-    </LinearLayout>
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:overlapAnchor="false"
+        android:background="@drawable/spinner_spinner1"/>
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:overlapAnchor="false"
+        android:background="@drawable/spinner_spinner1"/>
+
+
+
+
 
 
 
@@ -110,9 +144,12 @@
 
     <Button
         android:id="@+id/complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/popuplayout2"
+        android:padding="4dp"
         android:text="완료"
         android:layout_gravity="center"/>
 
